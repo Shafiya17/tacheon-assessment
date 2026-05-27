@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPIT — Marketing Performance Intelligence Tool (Wireframe)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f4f1eb;
+    --surface: #ffffff;
+    --border: #d6d0c4;
+    --text: #1a1814;
+    --muted: #7a7570;
+    --accent: #1a3a5c;
+    --accent-light: #e8f0f8;
+    --good: #1a5c3a;
+    --good-bg: #e8f5ee;
+    --warn: #5c3a1a;
+    --warn-bg: #f5ede8;
+    --tag: #5c1a3a;
+    --tag-bg: #f5e8ee;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* WIREFRAME BANNER */
+  .wireframe-banner {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  /* TOP NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--muted); font-weight: 400; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-right select {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 6px 12px;
+    font-family: var(--sans);
+    font-size: 13px;
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .freshness {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .freshness .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: #2e9e5b;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  /* MAIN LAYOUT */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  /* HEADER ROW */
+  .header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .page-title h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .page-title p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 3px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .controls select, .controls button {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 7px 14px;
+    font-family: var(--sans);
+    font-size: 13px;
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .btn-upload {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+    font-weight: 500;
+  }
+
+  /* INSIGHT CARD */
+  .insight-card {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .insight-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .insight-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .insight-text {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .insight-basis {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    opacity: 0.65;
+  }
+
+  /* SUMMARY TILES */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    position: relative;
+  }
+
+  .tile-channel {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .tile-value {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .tile-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .tile-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .badge-best { background: var(--good-bg); color: var(--good); }
+  .badge-low  { background: var(--warn-bg); color: var(--warn); }
+
+  /* MAIN TABLE */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: var(--bg);
+    padding: 12px 18px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--bg); }
+
+  tbody td {
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .channel-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .channel-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ch-paid-social { background: #4a90d9; }
+  .ch-paid-search { background: #e8a020; }
+  .ch-email       { background: #2e9e5b; }
+  .ch-organic     { background: #9b59b6; }
+
+  .channel-name { font-weight: 500; }
+  .channel-source { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+
+  td.num { font-family: var(--mono); font-size: 13px; text-align: right; }
+  th.num { text-align: right; }
+
+  .delta { font-size: 11px; font-family: var(--mono); }
+  .delta.up   { color: var(--good); }
+  .delta.down { color: #c0392b; }
+
+  .perf-bar-wrap { width: 80px; background: var(--bg); border-radius: 4px; height: 6px; overflow: hidden; }
+  .perf-bar { height: 6px; border-radius: 4px; }
+
+  /* FOOTER NOTE */
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wireframe-banner">⬡ WIREFRAME — Marketing Performance Intelligence Tool (MPIT) v1 · Task 1 Submission</div>
+
+<nav>
+  <div class="nav-logo">MPIT <span>/ internal tool</span></div>
+  <div class="nav-right">
+    <select>
+      <option>Client: Apex Retail</option>
+      <option>Client: Nova Fintech</option>
+      <option>Client: Bloom Beauty</option>
+    </select>
+    <div class="freshness">
+      <span class="dot"></span>Data updated: Today, 09:14 AM
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="header-row">
+    <div class="page-title">
+      <h1>Marketing Performance Overview</h1>
+      <p>Apex Retail · Last 30 days vs. prior 30 days</p>
+    </div>
+    <div class="controls">
+      <select>
+        <option>Last 7 days</option>
+        <option selected>Last 30 days</option>
+        <option>Custom range</option>
+      </select>
+      <button class="btn-upload">↑ Upload CSV</button>
+    </div>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="insight-card">
+    <div class="insight-icon">💡</div>
+    <div>
+      <div class="insight-label">Recommended Focus</div>
+      <div class="insight-text">Paid Search is delivering 2.3× the conversion rate of Paid Social this period. Consider reallocating budget from Paid Social toward Paid Search to improve overall ROAS.</div>
+      <div class="insight-basis">Based on: Paid Search CPA ₹320 vs Paid Social CPA ₹742 · Paid Social spend 38% of total budget</div>
+    </div>
+  </div>
+
+  <!-- TILES -->
+  <div class="tiles">
+    <div class="tile">
+      <div class="tile-badge badge-low">⚠ Lowest ROAS</div>
+      <div class="tile-channel">Paid Social</div>
+      <div class="tile-value">₹1.8</div>
+      <div class="tile-label">ROAS · ₹1,24,000 spend</div>
+    </div>
+    <div class="tile">
+      <div class="tile-badge badge-best">★ Best CPA</div>
+      <div class="tile-channel">Paid Search</div>
+      <div class="tile-value">₹320</div>
+      <div class="tile-label">CPA · ₹68,000 spend</div>
+    </div>
+    <div class="tile">
+      <div class="tile-channel">Email</div>
+      <div class="tile-value">34.2%</div>
+      <div class="tile-label">Open rate · 3 campaigns</div>
+    </div>
+    <div class="tile">
+      <div class="tile-channel">Organic</div>
+      <div class="tile-value">+18%</div>
+      <div class="tile-label">Clicks vs prior period</div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="section-label">Channel Breakdown</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th class="num">Spend</th>
+          <th class="num">Impressions</th>
+          <th class="num">Clicks</th>
+          <th class="num">Conversions</th>
+          <th class="num">CPA</th>
+          <th class="num">ROAS</th>
+          <th>vs Prior Period</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="channel-cell">
+              <div class="channel-dot ch-paid-social"></div>
+              <div>
+                <div class="channel-name">Paid Social</div>
+                <div class="channel-source">meta_export_may2026.csv</div>
+              </div>
+            </div>
+          </td>
+          <td class="num">₹1,24,000</td>
+          <td class="num">8,40,000</td>
+          <td class="num">6,200</td>
+          <td class="num">167</td>
+          <td class="num">₹742</td>
+          <td class="num">1.8×</td>
+          <td>
+            <div class="perf-bar-wrap"><div class="perf-bar" style="width:32%;background:#e74c3c;"></div></div>
+            <div class="delta down">▼ 12% conv.</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="channel-cell">
+              <div class="channel-dot ch-paid-search"></div>
+              <div>
+                <div class="channel-name">Paid Search</div>
+                <div class="channel-source">google_ads_may2026.csv</div>
+              </div>
+            </div>
+          </td>
+          <td class="num">₹68,000</td>
+          <td class="num">2,10,000</td>
+          <td class="num">4,100</td>
+          <td class="num">212</td>
+          <td class="num">₹320</td>
+          <td class="num">4.2×</td>
+          <td>
+            <div class="perf-bar-wrap"><div class="perf-bar" style="width:85%;background:#2e9e5b;"></div></div>
+            <div class="delta up">▲ 21% conv.</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="channel-cell">
+              <div class="channel-dot ch-email"></div>
+              <div>
+                <div class="channel-name">Email</div>
+                <div class="channel-source">klaviyo_may2026.csv</div>
+              </div>
+            </div>
+          </td>
+          <td class="num">₹8,000</td>
+          <td class="num">48,000</td>
+          <td class="num">3,800</td>
+          <td class="num">94</td>
+          <td class="num">₹85</td>
+          <td class="num">11.2×</td>
+          <td>
+            <div class="perf-bar-wrap"><div class="perf-bar" style="width:70%;background:#2e9e5b;"></div></div>
+            <div class="delta up">▲ 8% OR</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="channel-cell">
+              <div class="channel-dot ch-organic"></div>
+              <div>
+                <div class="channel-name">Organic / SEO</div>
+                <div class="channel-source">search_console_may2026.csv</div>
+              </div>
+            </div>
+          </td>
+          <td class="num">—</td>
+          <td class="num">1,20,000</td>
+          <td class="num">9,400</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td>
+            <div class="perf-bar-wrap"><div class="perf-bar" style="width:60%;background:#2e9e5b;"></div></div>
+            <div class="delta up">▲ 18% clicks</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-note">
+    <span>All figures shown for the selected period only. Source files shown per channel for transparency.</span>
+    <span>MPIT v1 · Internal use only · Not for client distribution</span>
+  </div>
+
+</div>
+</body>
+</html>
