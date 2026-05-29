@@ -212,6 +212,11 @@ def main():
     combined = pd.concat(all_frames, ignore_index=True)
     log.info(f"\nTotal rows ready to load: {len(combined)}")
 
+    # Save local CSV backup before loading to BigQuery
+    backup_path = f"weather_backup_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.csv"
+    combined.to_csv(backup_path, index=False)
+    log.info(f"Local backup saved to: {backup_path}")
+
     load_to_bigquery(combined, key_path=args.key)
 
     log.info("\n" + "=" * 60)
